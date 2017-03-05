@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getStoreCompletedOrders } from '../../../actions';
 import ListItemCompleted from './ListItemCompleted';
-// import { Chart } from 'react-d3-core';
-// import { BarChart } from 'react-d3-basic';
+import BarChartComponent from './Graphs/BarChart';
+import axios from 'axios';
+import { API_URL } from '../../../actions';
 
 class StoreAnalytics extends Component {
   constructor(){
