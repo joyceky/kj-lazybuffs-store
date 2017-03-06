@@ -92,12 +92,12 @@ class StoreAnalytics extends Component {
         <section style={style.header}>
           <section>
             <span>Select a month to view analytics for {`${this.props.auth.storeName}: `}</span>
-            <select onChange={this.selectMonth} value={this.state.month}>
+            <select style={style.select} onChange={this.selectMonth} value={this.state.month}>
                 {months.map((monthVal, i) => {
               return <option value={i}>{monthVal}</option>
             })}
             </select>
-            <select onChange={this.selectYear} value={this.state.year}>
+            <select style={style.select} onChange={this.selectYear} value={this.state.year}>
             {
               [2014,2015,2016,2017]
               .map((year) => {
@@ -142,6 +142,11 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+  },
+  select: {
+    height: '22px',
+    fontSize: '16px',
+    margin: '8px'
   },
   header: {
     padding: '16px',
