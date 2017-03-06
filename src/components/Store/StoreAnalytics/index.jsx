@@ -113,17 +113,16 @@ class StoreAnalytics extends Component {
           {this.state.orders.length > 0
           ?
           <div>
+            <p>Orders Analytics</p>
             <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="orders" color="#7830ee" />
+
+            <p>Revenue Analytics</p>
             <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="total" color="#29cb56" />
+
+            <p>{`${this.props.auth.storeName} Revenue for ${months[this.state.month]} ${this.state.year}: $${ this.calcRevenue(this.state.orders)}`}</p>
           </div>
 
           : <h1 style={style.noOrdersTitle}>No Orders for {`${months[this.state.month]} ${this.state.year}`}</h1>}
-        </section>
-
-        <section>
-          {
-            `${this.props.auth.storeName} Revenue for ${months[this.state.month]} ${this.state.year}: $${ this.calcRevenue(this.state.orders)}`
-          }
         </section>
 
         <ul style={style.listStyle}>
@@ -150,7 +149,8 @@ const style = {
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    fontSize: '20px'
   },
   chartContainer: {
     display: 'flex',
@@ -158,6 +158,8 @@ const style = {
     justifyContent: 'center',
     height: 'auto',
     width: 'auto',
+    fontSize: '20px',
+    textAlign: 'center'
   },
   listStyle: {
     listStyle: 'none',
