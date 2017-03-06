@@ -11,13 +11,12 @@ class StoreAnalytics extends Component {
   constructor(){
     super();
     const today = new Date();
-
     this.state = {
-      month: (today.getMonth() - 1),
-      year: today.getFullYear(),
-      orders: []
+      // day: today.getDate(),
+      month: today.getMonth(),
+      year: today.getFullYear()
     }
-
+    this.selectDay = this.selectDay.bind(this);
     this.selectMonth = this.selectMonth.bind(this);
     this.selectYear = this.selectYear.bind(this);
     this.getOrderData = this.getOrderData.bind(this);
@@ -42,6 +41,9 @@ class StoreAnalytics extends Component {
       })
   }
 
+  // selectDay(e){
+  //   this.setState({ day: parseInt(e.target.value) });
+  // }
   selectMonth(e){
     this.setState({ month: parseInt(e.target.value) });
     console.log("etarget", e.target.value);
@@ -49,41 +51,34 @@ class StoreAnalytics extends Component {
   }
   selectYear(e){
     this.setState({ year: parseInt(e.target.value) });
-    this.getOrderData(this.state.month, e.target.value);
+    this.getOrderData(this.state.month, e.target.value)
+
   }
 
-  formatData(orders) {
-    const daysNum = new Date(this.state.year, this.state.month, 0).getDate();
-    const days = [];
-
-    for (var i = 1; i <= daysNum; i++) { days.push(i) };
-
-    const cleanData = days.map((day) => {
-      const daysOrders = orders.filter((order) => {
-        if ( new Date(parseInt(order.orderCreatedAt)).getDate() === day) return true;
-      });
-      const total = daysOrders.reduce((curr, nextOrder) => {
-         return curr + parseFloat(nextOrder.orderSubTotal) ;
-      }, 0);
-
-      return { date: day, total, orders: daysOrders.length };
-    });
-
-    return cleanData;
-  }
-
-  calcRevenue(orders){
-      return orders
-      .reduce((prev, curr) => {
-        return prev + parseFloat(curr.orderSubTotal);
-      }, 0).toFixed(2);
-  }
+  // filterByDate(){
+  //     return this.props.storeCompletedOrders
+  //     .filter(e => {
+  //       var orderDate = new Date(parseInt(e.orderCreatedAt));
+  //       if ( orderDate.getDate() === this.state.day && orderDate.getMonth() === this.state.month) {
+  //         return true;
+  //       }
+  //     })
+  // }
+  // calcRevenue(orders){
+  //     return orders
+  //     .reduce((prev, curr) => {
+  //       return prev + parseFloat(curr.orderSubTotal);
+  //     }, 0).toFixed(2);
+  // }
 
   render(){
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var x = (e) => {
+      return e.orderId;
+      var orderDate = new Date(parseInt(e.orderCreatedAt));
+      return parseInt(orderDate.getDate());
+    };
 
     return (
-      <div>
       <section style={style.container}>
       <section style={style.previewBanner}>
         ANALYTICS BETA
@@ -91,9 +86,18 @@ class StoreAnalytics extends Component {
         <section style={style.header}>
           <section>
             <select onChange={this.selectMonth} value={this.state.month}>
-                {months.map((monthVal, i) => {
+            {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            .map((monthVal, i) => {
               return <option value={i}>{monthVal}</option>
             })}
+            </select>
+            <select onChange={this.selectDay} value={this.state.day}>
+            {
+              [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+              .map((i) => {
+                return <option value={i}>{i}</option>
+              })
+            }
             </select>
             <select onChange={this.selectYear} value={this.state.year}>
             {
@@ -104,33 +108,44 @@ class StoreAnalytics extends Component {
             }
             </select>
           </section>
+
+          <section>
+          {/* {
+            `Store Revenue ${this.calcRevenue(this.filterByDate(this.props.storeCompletedOrders))}`
+          } */}
+          </section>
         </section>
 
 
           <section style={style.chartContainer}>
-          {this.state.orders.length > 0
-          ?
-          <div>
-            <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="orders" color="#7830ee" />
-            <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="total" color="#29cb56" />
-          </div>
-
-          : <h1 style={style.noOrdersTitle}>No Orders for {`${months[this.state.month]} ${this.state.year}`}</h1>}
-        </section>
-
-        <section>
-          {
-            `Store Revenue for ${months[this.state.month]} ${this.state.year}: $${ this.calcRevenue(this.state.orders)}`
-          }
-        </section>
-
-        <ul style={style.listStyle}>
-          {this.state.orders.map((order) => {
+          {/* {this.filterByDate(this.props.storeCompletedOrders).length > 0
+          ?  <BarChart
+            showXGrid= {true}
+            showYGrid= {true}
+            title={'Test'}
+            width={600}
+            height={450}
+            x={x}
+            xLabel={'Order ID: '}
+            xScale={'ordinal'}
+            data={this.filterByDate(this.props.storeCompletedOrders)}
+            chartSeries={
+              [
+                {
+                  field: 'orderSubTotal',
+                  name: 'Sub Total',
+                },
+              ]
+            }
+            />
+          : <h1 style={style.noOrdersTitle}>No Orders for {`${this.state.month + 1}/${this.state.day}/${this.state.year}`}</h1>} */}
+          </section>
+        {/* <ul style={style.listStyle}>
+          {this.filterByDate(this.props.storeCompletedOrders).map((order) => {
             return  <ListItemCompleted order={order} key={order.orderId} />
           })}
-        </ul>
+        </ul> */}
       </section>
-      </div>
     );
   }
 }
