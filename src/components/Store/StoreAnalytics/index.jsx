@@ -47,6 +47,7 @@ class StoreAnalytics extends Component {
     console.log("etarget", e.target.value);
     this.getOrderData(e.target.value, this.state.year)
   }
+
   selectYear(e){
     this.setState({ year: parseInt(e.target.value) });
     this.getOrderData(this.state.month, e.target.value);
@@ -90,6 +91,7 @@ class StoreAnalytics extends Component {
       </section>
         <section style={style.header}>
           <section>
+            <span>Select a month to view analytics for {`${this.props.auth.storeName}: `}</span>
             <select onChange={this.selectMonth} value={this.state.month}>
                 {months.map((monthVal, i) => {
               return <option value={i}>{monthVal}</option>
@@ -120,7 +122,7 @@ class StoreAnalytics extends Component {
 
         <section>
           {
-            `Store Revenue for ${months[this.state.month]} ${this.state.year}: $${ this.calcRevenue(this.state.orders)}`
+            `${this.props.auth.storeName} Revenue for ${months[this.state.month]} ${this.state.year}: $${ this.calcRevenue(this.state.orders)}`
           }
         </section>
 
