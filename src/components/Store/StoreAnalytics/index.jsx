@@ -13,7 +13,7 @@ class StoreAnalytics extends Component {
     const today = new Date();
 
     this.state = {
-      month: (today.getMonth() - 1),
+      month: today.getMonth(),
       year: today.getFullYear(),
       orders: []
     }
@@ -35,7 +35,7 @@ class StoreAnalytics extends Component {
         console.log("Month ", month, "Year ", year);
         console.log("Data ", data);
 
-        this.setState({ orders: data });
+        this.setState({ month, year, orders: data});
       })
       .catch((err) => {
         console.log("Error: ", err);
@@ -43,13 +43,13 @@ class StoreAnalytics extends Component {
   }
 
   selectMonth(e){
-    this.setState({ month: parseInt(e.target.value) });
+    // this.setState({ month: parseInt(e.target.value) });
     console.log("etarget", e.target.value);
     this.getOrderData(e.target.value, this.state.year)
   }
 
   selectYear(e){
-    this.setState({ year: parseInt(e.target.value) });
+    // this.setState({ year: parseInt(e.target.value) });
     this.getOrderData(this.state.month, e.target.value);
   }
 
@@ -61,7 +61,7 @@ class StoreAnalytics extends Component {
 
     const cleanData = days.map((day) => {
       const daysOrders = orders.filter((order) => {
-        if ( new Date(parseInt(order.orderCreatedAt)).getDate() === day) return true;
+        if ( new Date(parseInt(order.orderCreatedAt) + 420).getDate() === day) return true;
       });
       const total = daysOrders.reduce((curr, nextOrder) => {
          return curr + parseFloat(nextOrder.orderSubTotal) ;
@@ -112,7 +112,7 @@ class StoreAnalytics extends Component {
           <section style={style.chartContainer}>
           {this.state.orders.length > 0
           ?
-          <div>
+          <div style={{zIndex: '0'}}>
             <p>Orders Analytics</p>
             <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="orders" color="#7830ee" />
 

@@ -54,7 +54,7 @@ const navStyle = {
   background: '#292929',
   width: '100vw',
   height: '50px',
-  zIndex: '10',
+  zIndex: '100',
   top: '0',
   left: '0',
 }

@@ -5,12 +5,14 @@ const BarChartComponent = ({orders, dataKey, color}) => {
   // console.log("Orders in bar chart", orders);
   return (
       <div style={barChartStyle}>
-        <BarChart width={1100} height={500} data={orders}>
+        <BarChart width={1050} height={450} data={orders}>
           <XAxis dataKey="date" stroke="#8884d8" />
           <YAxis />
           <Tooltip />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <CartesianGrid stroke="#d6d6d6" strokeDasharray="4 4" />
           <Bar type="monotone" dataKey={dataKey} fill={color} barSize={30} />
+          <Tooltip/>
+          <Legend />
         </BarChart>
       </div>
   );
