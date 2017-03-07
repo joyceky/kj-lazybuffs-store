@@ -86,9 +86,6 @@ class StoreAnalytics extends Component {
     return (
       <div>
       <section style={style.container}>
-      <section style={style.previewBanner}>
-        ANALYTICS BETA
-      </section>
         <section style={style.header}>
           <section>
             <span>Select a month to view analytics for {`${this.props.auth.storeName}: `}</span>
