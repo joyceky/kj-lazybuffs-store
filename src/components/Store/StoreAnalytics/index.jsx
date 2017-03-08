@@ -84,8 +84,6 @@ class StoreAnalytics extends Component {
 
            <section style={style.header}>
              <section style={style.buttonContainer}>
-               <section  style={style.buttonContainerDropdowns}>
-
                  <select style={style.select} onChange={this.selectMonth} value={this.state.month}>
                    {
                       months.map((monthVal, i) => {
@@ -102,14 +100,13 @@ class StoreAnalytics extends Component {
                       })
                     }
                   </select>
-                </section>
-
-                  <button className='generate-invoice-button' style={style.btn} onClick={() => this.toggleInvoice()}>Generate Invoice</button>
               </section>
 
-              <section>
-                <p>{`Orders: ${ this.state.orders.length }`}</p>
-                <p>{`Revenue: $${ (this.calcRevenue(this.state.orders)) }`}</p>
+
+              <section style={style.overviewContainer}>
+                <p style={{padding: '10px'}}>{`Orders: ${ this.state.orders.length }`}</p>
+
+                <p style={{padding: '10px'}}>{` Revenue: $${ (this.calcRevenue(this.state.orders)) }`}</p>
               </section>
             </section>
 
@@ -124,7 +121,7 @@ class StoreAnalytics extends Component {
           <div>
             <section style={style.chartContainer}>
               <div style={{zIndex: '0'}}>
-                <p>Orders Analytics</p>
+                <p>Order Analytics</p>
                 <BarChartComponent orders={this.formatData(this.state.orders)} dataKey="orders" color="#CFB87C" />
 
                 <p>Revenue Analytics</p>
@@ -156,7 +153,7 @@ const style = {
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   btn: {
     borderRadius: '5px',
@@ -168,6 +165,20 @@ const style = {
     backgroundColor: 'black',
     boxShadow: '0px 5px 0px 0px #565A5C',
     fontSize: '18px'
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+  },
+  overviewContainer: {
+    display: 'flex',
+    width: '50%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: '20px',
@@ -186,17 +197,8 @@ const style = {
     width: '100%',
     boxSizing: 'border-box',
     display: 'flex',
-    flexDirection: 'column',
-    fontSize: '18px',
-  },
-  buttonContainer: {
-    display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  buttonContainerDropdown: {
-
+    fontSize: '18px',
   },
   chartContainer: {
     maxWidth: '100%',
