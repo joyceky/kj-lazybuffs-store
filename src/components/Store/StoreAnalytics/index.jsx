@@ -208,16 +208,6 @@ const style = {
     width: 'auto',
     fontSize: '20px',
     textAlign: 'center'
-  },
-  previewBanner: {
-    top: '50px',
-    left: '0',
-    width: '100%',
-    fontSize: '24px',
-    padding: '8px',
-    backgroundColor: '#414141',
-    textAlign: 'center',
-    color: '#FFB300',
   }
 }
 
