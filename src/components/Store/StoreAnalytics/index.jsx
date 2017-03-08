@@ -16,7 +16,8 @@ class StoreAnalytics extends Component {
     this.state = {
       month: today.getMonth(),
       year: today.getFullYear(),
-      orders: []
+      orders: [],
+      loading: false
     }
 
     this.selectMonth = this.selectMonth.bind(this);
@@ -29,17 +30,19 @@ class StoreAnalytics extends Component {
   }
 
   getOrderData(month, year) {
+    this.setState({ loading: true });
+
     axios.post(`${API_URL}/store/orders/analytics`, { auth: this.props.auth, month: month, year: year })
       .then(({ data }) => {
-        this.setState({ month, year, orders: data});
+        this.setState({ month, year, orders: data, loading: false });
       })
       .catch((err) => {
         console.log("Error: ", err);
+        this.setState({ loading: false });
       })
   }
 
   selectMonth(e){
-
     this.getOrderData(e.target.value, this.state.year)
   }
 
@@ -116,6 +119,13 @@ class StoreAnalytics extends Component {
               </span>
               : null }
 
+          {
+            !this.state.loading && this.state.orders.length === 0 ?
+            <span style={style.subContainer}>
+              <h1 style={style.title}>No Completed Orders For This Period</h1>
+            </span> : null
+          }
+
           { !this.state.loading && this.state.orders.length > 0
           ?
           <div>
@@ -129,7 +139,7 @@ class StoreAnalytics extends Component {
               </div>
             </section>
           </div>
-          : <h1 style={style.noOrdersTitle}>No Orders for {`${months[this.state.month]} ${this.state.year}`}</h1>}
+        : null }
 
         <ul style={style.listStyle}>
           {this.state.orders.map((order) => {
