@@ -86,7 +86,9 @@ class NewOrderForm extends Component {
     }
   }
 
-  customerLookupByPhone(num){
+  customerLookupByPhone(num) {
+    this.setState({ loadingCustomerPhone: true });
+
     axios.post(`${API_URL}/customer/num`, { num })
     .then(({ data }) => {
       if (data.err) return;
@@ -96,7 +98,7 @@ class NewOrderForm extends Component {
       if(data.customerZip) this.setState({ zip: data.customerZip });
       if(data.customerNotes) this.setState({ note: data.customerNotes });
       const num = data.customerPhone.slice(0,3) + '-' + data.customerPhone.slice(3,6) + '-' + data.customerPhone.slice(6,10);
-      this.setState({ phone: num, repeatCustomerId: data.customerId });
+      this.setState({ phone: num, repeatCustomerId: data.customerId, loadingCustomerPhone: false, repeatCustomer: true });
     })
     .catch(err => console.log(err));
   }
@@ -227,6 +229,7 @@ class NewOrderForm extends Component {
     return (
       <section style={style.container}>
         <form onSubmit={this.handleSubmit} style={style.form}>
+
           <MaterialInput
             onChange={this.handlePhoneChange}
             value={this.state.phone}
@@ -255,6 +258,7 @@ class NewOrderForm extends Component {
           />
           <br />
           {this.state.missingDataErr ? <h1 style={style.err}>Customer Info and Order Amount cannot be left blank. (Excludes Unit and Tip)</h1> : null}
+
           <section>
             <MaterialInput
               onChange={this.handleSubTotalChange}
@@ -317,7 +321,9 @@ class NewOrderForm extends Component {
 
           {this.state.ageRestricted
             ? <section style={style.section}>
+
                 <span style={style.ageRestrictedWarning}>Drivers License Must Match Exactly</span>
+
                 <MaterialInput
                   onChange={this.handleLicenseNum}
                   value={this.state.licenseNum}
@@ -341,6 +347,7 @@ class NewOrderForm extends Component {
               </section>
             : null}
           <br />
+
           <textarea
             style={style.textarea}
             placeholder="Notes"
@@ -353,6 +360,7 @@ class NewOrderForm extends Component {
           <button type='submit' style={style.submitButton} onClick={this.handleSubmit}>
             {this.props.loading === 'SUBMIT_ORDER_LOADING'  ? 'loading' : 'submit'}
           </button>
+          
         </form>
       </section>
     );

@@ -10,10 +10,9 @@ class Store extends Component {
   componentDidMount() {
     if (!this.props.auth) return browserHistory.push('/login');
     if (this.props.auth) {
-      if (this.props.auth.userType !== 'store') {
+      if (!this.props.auth.userStoreId) {
         return browserHistory.push('/login');
       }
-
     }
   }
 

@@ -21,7 +21,7 @@ class LoginForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth) {
-      if (nextProps.auth.userType === 'store') browserHistory.push('/');
+      if (nextProps.auth.userStoreId) browserHistory.push('/');
     }
   }
 
@@ -86,7 +86,7 @@ const style = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    background: '#292929',
+    background: '#000000',
     boxSizing: 'border-box',
     width: '100vw',
     height: '100vh',
@@ -98,7 +98,7 @@ const style = {
     margin: '0',
     padding: '0',
     padding: '16px',
-    backgroundColor: '#FFB300',
+    backgroundColor: '#CFB87C',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -117,7 +117,7 @@ const style = {
     marginBottom: '16px',
   },
   button: {
-    backgroundColor: '#FFB300',
+    backgroundColor: '#CFB87C',
     padding: '8px',
     fontSize: '1.25em',
     width: '100%',
@@ -128,10 +128,10 @@ const style = {
     boxShadow: '0 3px 6px rgba(0,0,0,0.23)'
   },
   logout: {
-    borderBottom: '1px solid #FFB300',
+    borderBottom: '1px solid #CFB87C',
   },
   signupLink: {
-    borderBottom: '1px solid #FFB300',
+    borderBottom: '1px solid #CFB87C',
   },
   signupText: {
     color: 'white',

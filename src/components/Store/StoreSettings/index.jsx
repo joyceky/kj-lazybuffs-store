@@ -48,7 +48,7 @@ const style = {
     padding: '8px 0',
   },
   logoutButton: {
-    color: '#FFB300',
+    color: '#CFB87C',
     fontSize: '16px',
   },
 };
